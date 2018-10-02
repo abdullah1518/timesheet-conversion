@@ -578,10 +578,10 @@ public class Main {
         StringBuilder data2sb = new StringBuilder();
         for (int i =0; i<array2.length; i++){
             array2d[k][l] = array2[i];
-            if (l == 0) System.out.print("(" + array2d[k][l] + ", ");
-            if (l == 1) System.out.print(array2d[k][l]+", ");
-            if (l == 2 || l==3) System.out.print("'" + array2d[k][l] + "', ");
-            if (l == 4) System.out.print(array2d[k][l] + "),");
+//            if (l == 0) System.out.print("(" + array2d[k][l] + ", ");
+//            if (l == 1) System.out.print(array2d[k][l]+", ");
+//            if (l == 2 || l==3) System.out.print("'" + array2d[k][l] + "', ");
+//            if (l == 4) System.out.print(array2d[k][l] + "),");
             l++;
             if (i%5==4){
                 k++;
@@ -590,13 +590,13 @@ public class Main {
         }
         String data2 = data2sb.toString();
 
-        //removing $ and inserting
+        //////////removing $ and inserting/////////
         StringBuilder dollarbillsb = new StringBuilder();
         for (int i=0;i<549;i++){
             dollarbillsb.append(array2d[i][4]);
         }
         String dollarbill = dollarbillsb.toString();
-        System.out.println(dollarbill);
+        //System.out.println(dollarbill);
         StringBuilder dollarout = new StringBuilder();
         for (int i=1;i<dollarbill.length();i++){
             String charchek = dollarbill.substring(i-1, i);
@@ -612,18 +612,49 @@ public class Main {
             }
         }
         String dollarins = dollarout.toString();
-        System.out.println(dollarout.toString());
+        //System.out.println(dollarout.toString());
         String[] dollarray = dollarins.split("\t");
         for (int i=0; i<549;i++){
             array2d[i][4]= dollarray[i];
         }
 
 
+        ////////////////formating date//////////
 
-        for (int x=0;x<549;x++){
-            array2d[x][2] = array2d[x][2]+":00";
-            array2d[x][3] = array2d[x][2]+":00";
+        //extracting date
+        StringBuilder datesb = new StringBuilder();
+        for (int i=0;i<549;i++){
+            datesb.append(array2d[i][3]);
+            datesb.append(" ");
+            datesb.append(i);
         }
+        String date = datesb.toString();
+        System.out.println(date);
+        //removing time
+        StringBuilder date2sb = new StringBuilder();
+        String[] lel = date.split(" ");
+        for(int i=0;i*2<lel.length;i++){
+            date2sb.append(lel[i*2]+"/");
+        }
+        String date2 = date2sb.toString();
+        System.out.println(date2);
+        //reformating date
+        String[] drray = date2.split("/");
+        StringBuilder dateout = new StringBuilder();
+        int xxx = 0;
+        for(int i=2;i*3<drray.length;i++){
+            dateout.append(drray[i*3-1]+"/"+drray[i*3-2]+"/"+drray[i*3]+" "+lel[xxx*2+1]+":00\t");
+            xxx++;
+        }
+        System.out.println(dateout);
+        //inserting
+        /*String[] irray = dateout.toString().split("\t");
+        int xx=0;
+        for (int x=0;x<549;x++){
+            array2d[x][3] = irray[xx];
+            xx++;
+        }*/
+        //final out
         for (int x=0;x<549;x++){
           for(int i=0;i<5;i++) {
               if (i == 0) System.out.print("(" + array2d[x][i] + ", ");
